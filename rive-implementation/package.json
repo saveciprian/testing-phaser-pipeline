@@ -1,0 +1,18 @@
+{
+  "name": "rive-implementation",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "@rive-app/canvas": "^2.26.4",
+    "phaser": "^3.88.2"
+  }
+}
