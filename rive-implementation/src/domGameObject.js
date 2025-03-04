@@ -8,7 +8,7 @@ const languages = {
 }
 
 var language = languages.English;
-var resolvedMenuText;
+var parsedCopy;
 
 class MainMenu extends Phaser.Scene
 {
@@ -23,7 +23,7 @@ class MainMenu extends Phaser.Scene
         this.load.audio('switchSound', '/switch.mp3');
 
         async function getCopy(){
-            resolvedMenuText = await menuText; 
+            parsedCopy = await menuText; 
         }
         getCopy();
     }
@@ -46,7 +46,7 @@ class MainMenu extends Phaser.Scene
         });
         this.add.existing(menuButtonText);
 
-        const continueButton = new TextButton(this, 300, 400, "continue", { fontSize: '64px', fill: '#fff'}, () => { this.scene.start('MainGame'); });
+        const continueButton = new TextButton(this, 300, 400, "continue", { fontSize: '64px', fill: '#fff'}, () => { this.scene.start('DidYouKnow'); });
         continueButton.on('pointerdown', () => {
             buttonHoverSound();
         });
@@ -68,15 +68,15 @@ class MainMenu extends Phaser.Scene
 
         function updateCopy()
         {
-            languageButtonText.text = resolvedMenuText[0][language];
-            menuButtonText.text = resolvedMenuText[1][language];
-            continueButton.text = resolvedMenuText[2][language];
-            exitButton.text = resolvedMenuText[3][language];
+            languageButtonText.text = parsedCopy[0][language];
+            menuButtonText.text = parsedCopy[1][language];
+            continueButton.text = parsedCopy[2][language];
+            exitButton.text = parsedCopy[3][language];
         }
 
         function changeLanguage()
         {
-            let languageCount = resolvedMenuText[0].length;
+            let languageCount = parsedCopy[0].length;
             if(language + 1 < languageCount) language++;
             else language = 0;
 
@@ -109,6 +109,86 @@ class TextButton extends Phaser.GameObjects.Text {
     enterButtonActiveState() {
         this.setStyle({ fill: '#fff' });
     }
+}
+
+class DidYouKnow extends Phaser.Scene
+{
+    constructor ()
+    {
+        super({ key: 'DidYouKnow'});
+    }
+
+    preload()
+    {
+        this.load.audio('switchSound', '/switch.mp3');
+    }
+
+    // parsedCopy[4][language]
+
+    create()
+    {
+        
+
+        let switchSound = this.sound.add('switchSound');
+        const languageButtonText = new TextButton(this, 200, 250, "en", { fontSize: '32px', fill: '#fff'}, changeLanguage);
+        languageButtonText.on('pointerdown', () => {
+            buttonHoverSound();
+        });
+        this.add.existing(languageButtonText);
+
+        const continueButton = new TextButton(this, 200, window.innerHeight/2 + 200, "continue", { fontSize: '32px', fill: '#fff'}, () => { this.scene.start('MainGame'); });
+        continueButton.on('pointerdown', () => {
+            buttonHoverSound();
+        });
+        this.add.existing(continueButton);
+
+        
+        const didYouKnowText = this.add.dom(window.innerWidth/2, window.innerHeight/2 - 200).createElement('div', 'width: 700px; height: 0px; text-align:center; font-size:36px; animation: fade-in 1s ease-out;', parsedCopy[4][language]);
+        const message = this.add.dom(window.innerWidth/2, window.innerHeight/2 - 100).createElement('div', 'width: 700px; height: 0px; text-align:center; font-size:48px; animation: fade-in 3s ease-in;', parsedCopy[randomRange(5, parsedCopy.length - 1)][language]);
+
+        
+        updateCopy();
+    
+        // this.input.on('pointerdown', () =>{
+        //     this.scene.start('MainGame');
+        // });
+
+        function buttonHoverSound(){
+            switchSound.play({detune: 1000});
+        }   
+
+        function updateCopy()
+        {
+            languageButtonText.text = parsedCopy[0][language];
+            continueButton.text = parsedCopy[2][language];
+            didYouKnowText.setText(parsedCopy[4][language]);
+            message.setText(parsedCopy[randomRange(5, parsedCopy.length - 1)][language]);
+        }
+
+        function changeLanguage()
+        {
+            let languageCount = parsedCopy[0].length;
+            if(language + 1 < languageCount) language++;
+            else language = 0;
+
+            updateCopy();
+        }
+
+        this.time.delayedCall(8000, () => {
+            this.scene.start('MainGame');
+        }, [], this);
+        
+    }
+
+    update()
+    {
+        
+    }
+}
+
+function randomRange(min, max)
+{
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 class GameScene extends Phaser.Scene
@@ -206,13 +286,14 @@ class GameScene extends Phaser.Scene
 
 const config = {
     type: Phaser.AUTO,
+    parent: gameContainer,
     width: window.innerWidth,
     height: window.innerHeight,
     transparent: true,
-    scene: [MainMenu, GameScene],
     dom:{
         createContainer: true
     },
+    scene: [MainMenu, DidYouKnow, GameScene],
     physics: {
         default: 'arcade',
         arcade: {
