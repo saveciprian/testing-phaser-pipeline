@@ -3,10 +3,12 @@ import Phaser from 'phaser';
 
 import './style.css'
 
-import './domGameObject.js';
+import './importCSV.js';
 import './importRive.js';
+import './domGameObject.js';
 
 // document.querySelector('#app').innerHTML = `
-//   <script src=domGameObject.js></script>
+//     <script src=importRive.js></script>
+//     <script src=domGameObject.js></script>
 // `
 
