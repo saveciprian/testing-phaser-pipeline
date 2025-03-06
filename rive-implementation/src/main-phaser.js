@@ -1,5 +1,6 @@
 import { enablePlayer } from './importRive.js';
-import { menuText } from "./importCSV";
+import { menuText } from "./importCSV.js";
+import { randomRange } from "./helperFunctions.js";
 
 const languages = {
     English: 0,
@@ -9,8 +10,8 @@ const languages = {
 var language = languages.English;
 var parsedCopy;
 
-//#region Main Menu
 class MainMenu extends Phaser.Scene
+//#region Main Menu
 {
     
     constructor ()
@@ -44,7 +45,7 @@ class MainMenu extends Phaser.Scene
             changeLanguage();
         });
         this.menuBTN.addEventListener('pointerdown', (event) => {
-            buttonHoverSound();
+            // buttonHoverSound();
         });
         this.continueBTN.addEventListener('pointerdown', (event) => {
             buttonHoverSound();
@@ -55,31 +56,6 @@ class MainMenu extends Phaser.Scene
             buttonHoverSound();
             window.close();
         });
-
-
-        // const languageButtonText = new TextButton(this, 200, 250, "en", { fontSize: '32px', fill: '#fff'}, changeLanguage);
-        // languageButtonText.on('pointerdown', () => {
-        //     buttonHoverSound();
-        // });
-        // this.add.existing(languageButtonText);
-
-        // const menuButtonText = new TextButton(this, 300, 300, "menu", { fontSize: '64px', fill: '#fff'}, () => { });
-        // menuButtonText.on('pointerdown', () => {
-        //     buttonHoverSound();
-        // });
-        // this.add.existing(menuButtonText);
-
-        // const continueButton = new TextButton(this, 300, 400, "continue", { fontSize: '64px', fill: '#fff'}, () => { this.scene.start('DidYouKnow'); });
-        // continueButton.on('pointerdown', () => {
-        //     buttonHoverSound();
-        // });
-        // this.add.existing(continueButton);
-
-        // const exitButton = new TextButton(this, 300, 800, "continue", { fontSize: '64px', fill: '#fff'}, () => { window.close() });
-        // exitButton.on('pointerdown', () => {
-        //     buttonHoverSound();
-        // });
-        // this.add.existing(exitButton);
         //#endregion
 
         updateCopy();
@@ -140,8 +116,8 @@ class TextButton extends Phaser.GameObjects.Text {
     }
 }
 
-//#region Did You Know
 class DidYouKnow extends Phaser.Scene
+//#region Did You Know
 {
     constructor ()
     {
@@ -216,13 +192,8 @@ class DidYouKnow extends Phaser.Scene
     }
 }
 
-function randomRange(min, max)
-{
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-//#region Game Scene
 class GameScene extends Phaser.Scene
+//#region Game Scene
 {
     constructor ()
     {
@@ -315,8 +286,8 @@ class GameScene extends Phaser.Scene
 
 }
 
-//#region Config
 const config = {
+    //#region Config
     type: Phaser.AUTO,
     parent: gameContainer,
     width: window.innerWidth,

@@ -81,7 +81,7 @@ h2{
   padding: 10px 20px;
 }
 
-h1:hover, h2:hover{
+.button:hover{
   color: red;
   transition: all 0.2s ease-in-out;
 }
