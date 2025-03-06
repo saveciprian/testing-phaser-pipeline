@@ -4,6 +4,7 @@ import Phaser from 'phaser';
 import './style.css'
 
 import './importCSV.js';
+import './importSheet.js';
 import './importRive.js';
 import './domGameObject.js';
 

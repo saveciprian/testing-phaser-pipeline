@@ -35,3 +35,57 @@ body{
     opacity: 0;
   }
 }
+
+#mainMenu{
+  width: 70%;
+  height: 50svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex{
+  display: flex;
+  flex-direction: column;
+}
+
+.wideGap{
+  
+  gap: 10em;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.narrowGap{
+  
+  height: 500px;
+  justify-content: space-between;
+}
+
+h1{
+  font-size: min(8vw, 48px);
+  font-weight: 700;
+  display: inline;
+  margin: 0;
+  padding: 10px 20px;
+
+}
+
+h2{
+  position: relative;
+  left: -2em;
+  font-size: min(5vw, 28px);
+  font-weight: 300;
+  display: inline;
+  margin:0 ;
+  padding: 10px 20px;
+}
+
+h1:hover, h2:hover{
+  color: red;
+  transition: all 0.2s ease-in-out;
+}
+
+#exitBTN{
+  font-weight: 300;
+}

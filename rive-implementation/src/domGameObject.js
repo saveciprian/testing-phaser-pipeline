@@ -4,12 +4,12 @@ import { menuText } from "./importCSV";
 const languages = {
     English: 0,
     Spanish: 1,
-    Romanian: 2
 }
 
 var language = languages.English;
 var parsedCopy;
 
+//#region Main Menu
 class MainMenu extends Phaser.Scene
 {
     
@@ -30,33 +30,56 @@ class MainMenu extends Phaser.Scene
 
     create ()
     { 
-        
-        
+        let menuOverlay = this.add.dom(window.innerWidth/2, window.innerHeight/2, '#mainMenu');
         let switchSound = this.sound.add('switchSound');
+
         //#region Text Labels
-        const languageButtonText = new TextButton(this, 200, 250, "en", { fontSize: '32px', fill: '#fff'}, changeLanguage);
-        languageButtonText.on('pointerdown', () => {
-            buttonHoverSound();
-        });
-        this.add.existing(languageButtonText);
+        this.languageBTN = document.getElementById('languageBTN');
+        this.menuBTN = document.getElementById('menuBTN');
+        this.continueBTN = document.getElementById('continueBTN');
+        this.exitBTN = document.getElementById('exitBTN');
 
-        const menuButtonText = new TextButton(this, 300, 300, "menu", { fontSize: '64px', fill: '#fff'}, () => { });
-        menuButtonText.on('pointerdown', () => {
+        this.languageBTN.addEventListener('pointerdown', (event) => {
+            buttonHoverSound();
+            changeLanguage();
+        });
+        this.menuBTN.addEventListener('pointerdown', (event) => {
             buttonHoverSound();
         });
-        this.add.existing(menuButtonText);
+        this.continueBTN.addEventListener('pointerdown', (event) => {
+            buttonHoverSound();
+            menuOverlay.destroy();
+            this.scene.start('DidYouKnow');
+        });
+        this.exitBTN.addEventListener('pointerdown', (event) => {
+            buttonHoverSound();
+            window.close();
+        });
 
-        const continueButton = new TextButton(this, 300, 400, "continue", { fontSize: '64px', fill: '#fff'}, () => { this.scene.start('DidYouKnow'); });
-        continueButton.on('pointerdown', () => {
-            buttonHoverSound();
-        });
-        this.add.existing(continueButton);
 
-        const exitButton = new TextButton(this, 300, 800, "continue", { fontSize: '64px', fill: '#fff'}, () => { window.close() });
-        exitButton.on('pointerdown', () => {
-            buttonHoverSound();
-        });
-        this.add.existing(exitButton);
+        // const languageButtonText = new TextButton(this, 200, 250, "en", { fontSize: '32px', fill: '#fff'}, changeLanguage);
+        // languageButtonText.on('pointerdown', () => {
+        //     buttonHoverSound();
+        // });
+        // this.add.existing(languageButtonText);
+
+        // const menuButtonText = new TextButton(this, 300, 300, "menu", { fontSize: '64px', fill: '#fff'}, () => { });
+        // menuButtonText.on('pointerdown', () => {
+        //     buttonHoverSound();
+        // });
+        // this.add.existing(menuButtonText);
+
+        // const continueButton = new TextButton(this, 300, 400, "continue", { fontSize: '64px', fill: '#fff'}, () => { this.scene.start('DidYouKnow'); });
+        // continueButton.on('pointerdown', () => {
+        //     buttonHoverSound();
+        // });
+        // this.add.existing(continueButton);
+
+        // const exitButton = new TextButton(this, 300, 800, "continue", { fontSize: '64px', fill: '#fff'}, () => { window.close() });
+        // exitButton.on('pointerdown', () => {
+        //     buttonHoverSound();
+        // });
+        // this.add.existing(exitButton);
         //#endregion
 
         updateCopy();
@@ -68,10 +91,15 @@ class MainMenu extends Phaser.Scene
 
         function updateCopy()
         {
-            languageButtonText.text = parsedCopy[0][language];
-            menuButtonText.text = parsedCopy[1][language];
-            continueButton.text = parsedCopy[2][language];
-            exitButton.text = parsedCopy[3][language];
+            // languageButtonText.text = parsedCopy[0][language];
+            // menuButtonText.text = parsedCopy[1][language];
+            // continueButton.text = parsedCopy[2][language];
+            // exitButton.text = parsedCopy[3][language];
+
+            languageBTN.innerHTML = parsedCopy[0][language];
+            menuBTN.innerHTML = parsedCopy[1][language];
+            continueBTN.innerHTML = parsedCopy[2][language];
+            exitBTN.innerHTML = parsedCopy[3][language];
         }
 
         function changeLanguage()
@@ -84,6 +112,7 @@ class MainMenu extends Phaser.Scene
         }
     }
 }
+
 
 class TextButton extends Phaser.GameObjects.Text {
     constructor(scene, x, y, text, style, callback)
@@ -111,6 +140,7 @@ class TextButton extends Phaser.GameObjects.Text {
     }
 }
 
+//#region Did You Know
 class DidYouKnow extends Phaser.Scene
 {
     constructor ()
@@ -191,6 +221,7 @@ function randomRange(min, max)
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+//#region Game Scene
 class GameScene extends Phaser.Scene
 {
     constructor ()
@@ -284,6 +315,7 @@ class GameScene extends Phaser.Scene
 
 }
 
+//#region Config
 const config = {
     type: Phaser.AUTO,
     parent: gameContainer,
