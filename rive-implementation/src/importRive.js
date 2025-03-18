@@ -12,20 +12,20 @@ export function enablePlayer()
   });
 }
 
-export function enableArrow(cvs)
-{
-  const r = new rive.Rive({
-    src: '/testing_frames.riv',
-    canvas: cvs,
-    autoplay: true,
-    artboard: "Swipe Arrow", 
-    stateMachines: "State Machine 1",
+// export function enableArrow(cvs)
+// {
+//   const r = new rive.Rive({
+//     src: '/testing_frames.riv',
+//     canvas: cvs,
+//     autoplay: true,
+//     artboard: "Swipe Arrow", 
+//     stateMachines: "State Machine 1",
     
-    onLoad: () => {
-      r.resizeToCanvas();
-    },
-  });
-}
+//     onLoad: () => {
+//       r.resizeToCanvas();
+//     },
+//   });
+// }
 
 
 

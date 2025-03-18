@@ -1,4 +1,4 @@
-import { enableArrow, enablePlayer } from './importRive.js';
+import { enablePlayer } from './importRive.js';
 import { menuText } from "./importCSV.js";
 import { randomRange } from "./helperFunctions.js";
 
@@ -219,13 +219,13 @@ class GameScene extends Phaser.Scene
         document.getElementById("riveCanvas").style.display = "";
         enablePlayer();
 
-        this.arrowCanvas = document.createElement("canvas");
-        this.arrowCanvas.id = "riveArrow";
-        this.arrowCanvas.width = 200;
-        this.arrowCanvas.height = 500;
-        document.body.appendChild(this.arrowCanvas);
+        // this.arrowCanvas = document.createElement("canvas");
+        // this.arrowCanvas.id = "riveArrow";
+        // this.arrowCanvas.width = 200;
+        // this.arrowCanvas.height = 500;
+        // document.body.appendChild(this.arrowCanvas);
         
-        enableArrow(this.arrowCanvas);
+        // enableArrow(this.arrowCanvas);
         
         this.logo = this.physics.add.image(100, 100);
         this.logo.setBodySize(100, 100);
@@ -237,11 +237,11 @@ class GameScene extends Phaser.Scene
         // let arrow = this.add.dom(500, 700, '#riveArrow');
 
         //#region Render Texture
-        this.arrowTexture = this.add.renderTexture(250, 250, 500, 500);
+        // this.arrowTexture = this.add.renderTexture(250, 250, 500, 500);
 
-        this.arrowCanvas.style.display = "none";
+        // this.arrowCanvas.style.display = "none";
 
-        this.events.on("postupdate", this.updateRiveTexture, this);
+        // this.events.on("postupdate", this.updateRiveTexture, this);
 ~
 
         console.log("{",this.logo.displayWidth, this.logo.displayHeight, "}", ", {", this.artboard.displayWidth, this.artboard.displayHeight, "}");
@@ -334,18 +334,18 @@ class GameScene extends Phaser.Scene
         // this.arrowTexture.draw(this.textures.createCanvasFromCanvas(this.riveCanvas));
 
         // Create a texture from the Rive canvas
-        const texture = this.textures.createCanvas('riveArrow', this.arrowTexture.width, this.arrowTexture.height);
-        const context = texture.getContext();
+        // const texture = this.textures.createCanvas('riveArrow', this.arrowTexture.width, this.arrowTexture.height);
+        // const context = texture.getContext();
 
-        // Clear the texture first
-        context.clearRect(0, 0, texture.width, texture.height);
+        // // Clear the texture first
+        // context.clearRect(0, 0, texture.width, texture.height);
 
-        // Draw the Rive canvas onto the Phaser texture
-        context.drawImage(this.riveCanvas, 0, 0);
+        // // Draw the Rive canvas onto the Phaser texture
+        // context.drawImage(this.riveCanvas, 0, 0);
 
-        // Clear and update the RenderTexture with the new texture
-        this.riveTexture.clear();
-        this.riveTexture.draw(texture, 0, 0);
+        // // Clear and update the RenderTexture with the new texture
+        // this.riveTexture.clear();
+        // this.riveTexture.draw(texture, 0, 0);
     }
     
     startTracking(event, graphics)
@@ -449,8 +449,8 @@ const config = {
     transparent: true,
     parent: gameContainer,
     dom:{ createContainer: true },
-    scene: [GameScene],
-    // scene: [MainMenu, DidYouKnow, GameScene],
+    // scene: [GameScene],
+    scene: [MainMenu, DidYouKnow, GameScene],
     physics: {
         default: 'arcade',
         arcade: {
